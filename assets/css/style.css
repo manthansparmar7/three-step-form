@@ -1,0 +1,185 @@
+/* Skill Tags Styling */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.skill-tag:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+.skill-tag.selected {
+    background-color: #4f46e5;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+
+/* Selected Skills Section */
+#selected-skills {
+    margin-top: 20px;
+}
+
+#selected-skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.selected-tag {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-radius: 20px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.selected-tag .icon {
+    color: #0f5132;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Search Input Styling */
+.input-group .input-group-text {
+    border: 1px solid #ddd;
+    border-radius: 20px 0 0 20px;
+}
+
+.input-group .form-control {
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #ddd;
+    transition: border-color 0.2s ease;
+}
+
+.input-group .form-control:focus {
+    border-color: #4f46e5; /* Focused state border color */
+    outline: none;
+}
+
+/* Next Button Styling */
+.btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect on hover */
+}
+
+/* Styling for the Previous Button (Optional) */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+/* Step 2 Radio Options Layout */
+.radio-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust space between the options */
+}
+
+.radio-options-container .form-check {
+    flex: 1 0 45%; /* Each option will take up 45% width, with some space for gaps */
+}
+#error-message {
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
+.btn-secondary {
+    background-color: white; /* White background */
+    color: rgba(34, 34, 34, 0.616); /* Light grey text color */
+    border: 1px solid #dee2e6; /* Light grey border */
+}
+
+.btn-secondary:hover {
+    background-color: lightgrey; /* Light grey background on hover */
+    color: white; /* White text on hover */
+    border-color: grey; /* Slightly darker grey border on hover */
+}
+
+button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+form#step-form .errors {
+    color: red;
+}
+.verified-icon {
+    color: white; /* White color for the verified symbol */
+    font-size: 18px; /* Adjust size as needed */
+    font-weight: bold;
+    margin-right: 8px; /* Add spacing between the icon and the text */
+    vertical-align: middle; /* Align icon with the text */
+}
+
+.bg-dark ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Space between list items */
+}
+ul.advantages img {
+    width: 20px;
+    height: 20px;
+}
+.input-group .input-group-text {
+    border: 1px solid #ccc; /* Add border to the span (which wraps the image) */
+    border-radius: 0; /* Remove border radius for square corners */
+}
+
+.input-group .search-icon {
+    width: 20px; /* Adjust image size */
+    height: 20px; /* Ensure the image is square */
+    display: block; /* Make sure the image is displayed as a block */
+    margin: 0; /* Remove any margin */
+}
+.btn-secondary.prev-step, .btn-primary.next-step {
+    text-transform: uppercase;
+}
+.btn.btn-success {
+    border-radius: 20px; 
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+/* Responsive Adjustment */
+@media (max-width: 768px) {
+    .radio-options-container .form-check {
+        flex: 1 0 100%; /* On smaller screens, make the options stack in a single column */
+    }
+}
