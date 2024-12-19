@@ -3,13 +3,14 @@
 Plugin Name: 3-Step Form Plugin
 Description: A custom plugin to create a 3-step form with clean UI, AJAX handling, and dynamic features.
 Version: 1.0
-Author: Your Name
+Author: Manthan Parmar
 */
 
 if (!defined('ABSPATH')) exit;
 
 // Define constants
 define('STEP_FORM_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('STEP_FORM_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Database table creation
 function step_form_create_table() {
@@ -37,24 +38,23 @@ function step_form_create_table() {
 register_activation_hook(__FILE__, 'step_form_create_table');
 
 // Include necessary files
-// echo STEP_FORM_PLUGIN_DIR . 'includes/form-handler.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/admin-display.php';
+require_once STEP_FORM_PLUGIN_DIR . 'includes/admin-display.php';
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/form-handler.php';
+require_once STEP_FORM_PLUGIN_DIR . 'includes/form-handler.php';
 
-// require_once STEP_FORM_PLUGIN_DIR . 'includes/admin-panel.php';
+require_once STEP_FORM_PLUGIN_DIR . 'includes/ajax-operations.php';
 
 // Enqueue scripts and styles
 function step_form_enqueue_assets() {
     wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
-    wp_enqueue_style('step-form-css', plugin_dir_url(__FILE__) . 'assets/css/style.css');
+    wp_enqueue_style('step-form-css', STEP_FORM_PLUGIN_URL . 'assets/css/style.css');
     wp_enqueue_style('intl-tel-input-css', 'https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.15/build/css/intlTelInput.min.css');
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-validation-js', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js', ['jquery'], null, true);
     wp_enqueue_script('intl-tel-input-js', 'https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.15/build/js/intlTelInput.min.js', ['jquery'], null, true);
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
-    wp_enqueue_script('step-form-js', plugin_dir_url(__FILE__) . 'assets/js/script.js', ['jquery', 'jquery-validation-js', 'intl-tel-input-js'], null, true);
+    wp_enqueue_script('step-form-js', STEP_FORM_PLUGIN_URL . 'assets/js/script.js', ['jquery', 'jquery-validation-js', 'intl-tel-input-js'], null, true);
 
     wp_localize_script('step-form-js', 'stepFormAjax', ['ajax_url' => admin_url('admin-ajax.php')]);
 }
@@ -74,15 +74,15 @@ function step_form_shortcode() {
                         <p>Answer 6 short questions to help us understand your needs.</p>
                         <ul class="advantages">
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Gain access to 5000+ experts
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Get matched with a developer in 2 days
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Hire quickly and easily with 94% match success
                             </li>
                         </ul>
@@ -135,15 +135,15 @@ function step_form_shortcode() {
                         <p>Answer 6 short questions to help us understand your needs.</p>
                         <ul class="advantages">
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Gain access to 5000+ experts
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Get matched with a developer in 2 days
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Hire quickly and easily with 94% match success
                             </li>
                         </ul>
@@ -197,15 +197,15 @@ function step_form_shortcode() {
                         <p>Answer 6 short questions to help us understand your needs.</p>
                         <ul class="advantages">
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Gain access to 5000+ experts
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Get matched with a developer in 2 days
                             </li>
                             <li>
-                                <img src="<?php echo plugin_dir_url( __FILE__ ) . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
+                                <img src="<?php echo STEP_FORM_PLUGIN_URL . 'assets/images/verified-icon.png'; ?>" alt="Verified" class="verified-icon">
                                 Hire quickly and easily with 94% match success
                             </li>
                         </ul>
@@ -256,20 +256,3 @@ function step_form_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('step_form', 'step_form_shortcode');
-
-// Handle form submission (AJAX)
-function step_form_handle_submission() {
-    if (isset($_POST['name'], $_POST['email'], $_POST['phone'], $_POST['country_code'])) {
-        $name = sanitize_text_field($_POST['name']);
-        $email = sanitize_email($_POST['email']);
-        $phone = sanitize_text_field($_POST['phone']);
-        $country_code = sanitize_text_field($_POST['country_code']);
-
-        // Handle the form data, save to database, or send email
-        // For now, we just output the data
-        echo "Form submitted successfully: $name, $email, $phone, $country_code";
-    }
-    wp_die();
-}
-add_action('wp_ajax_step_form_handle_submission', 'step_form_handle_submission');
-add_action('wp_ajax_nopriv_step_form_handle_submission', 'step_form_handle_submission');
