@@ -177,6 +177,13 @@ ul.advantages img {
     border-radius: 20px;
     font-weight: 500;
 }
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
 /* Responsive Adjustment */
 @media (max-width: 768px) {
     .radio-options-container .form-check {

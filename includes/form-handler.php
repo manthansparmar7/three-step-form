@@ -1,33 +1,5 @@
 <?php
 
-// function save_step_form_data() {
-//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//         // Get form data
-//         $selected_skills = isset($_POST['selected_skills']) ? sanitize_text_field($_POST['selected_skills']) : '';
-//         $selected_option = isset($_POST['selected_option']) ? sanitize_text_field($_POST['selected_option']) : '';
-//         $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
-//         $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
-//         $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
-
-//         // Insert data into the database (example)
-//         global $wpdb;
-//         $table_name = $wpdb->prefix . 'step_form_data'; // Create a custom table if needed
-
-//         $wpdb->insert(
-//             $table_name,
-//             array(
-//                 'selected_skills' => $selected_skills,
-//                 'selected_option' => $selected_option,
-//                 'name' => $name,
-//                 'email' => $email,
-//                 'phone' => $phone,
-//                 'date_submitted' => current_time('mysql'),
-//             )
-//         );
-//     }
-// }
-// add_action('init', 'save_step_form_data');
-
 function handle_step_form_submission() {
     global $wpdb;
 
@@ -46,7 +18,7 @@ function handle_step_form_submission() {
     $agree = isset($form_data['terms_agreed']) ? filter_var($form_data['terms_agreed'], FILTER_VALIDATE_BOOLEAN) : false;
 
     // Validation
-    if (empty($name) || empty($email) || empty($phone) || !$agree) {
+    if (empty($name) || empty($email) || !$agree) {
         wp_send_json_error('Please fill out all required fields and agree to the terms.');
     }
 

@@ -132,6 +132,9 @@ jQuery(document).ready(function ($) {
     $('.prev-step').click(function (event) {
         event.preventDefault();  // Prevent form submission
 
+        // Hide error messages before going to the previous step
+        $('.error-message').remove();
+
         var prevStep = $(this).data('prev');
         
         // Move to the previous step
@@ -139,34 +142,83 @@ jQuery(document).ready(function ($) {
         $('#step-' + prevStep).show();
     });
 
+    // Initialize intl-tel-input for phone number input field
+    const phoneInput = $('#user-phone'); // Assuming you have an input field with the ID 'user-phone'
+
+    // Initialize intl-tel-input for the phone input field
+    const iti = window.intlTelInput(phoneInput[0], {
+        initialCountry: "auto",  // Automatically detects the user's country
+        geoIpLookup: function(callback) {
+            $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                const countryCode = (resp && resp.country) ? resp.country : "us";
+                callback(countryCode);
+            });
+        },
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", // For formatting and validation
+    });
+
+    // Phone number blur event no longer shows an alert, since phone is not required
+    phoneInput.on('blur', function () {
+        // No validation message or alert for phone field anymore
+    });
+
     // AJAX form submission on final step
     $('#submit-form').click(function (event) {
         event.preventDefault();  // Prevent default form submission
 
-    // Gather all form data
-    var formData = {
-        selected_skills: JSON.stringify(selectedSkills), // Pass the selected skills as a JSON string
-        selected_option: $('#selected-option-input').val(), // Option selected in the form
-        name: $('#user-name').val(), // Example: Name field
-        email: $('#user-email').val(), // Example: Email field
-        phone: $('#user-phone').val(), // Example: Phone field
-        terms_agreed: $('#user-terms-checkbox').prop('checked'), // Example: Terms and Conditions checkbox
-        // Add other fields as needed
-    };
+        // Clear previous error messages
+        $('.error-message').remove();
 
-    // You can also loop through form fields dynamically if the form has many fields:
-    $('#my-form').find('input, select, textarea').each(function () {
-        var input = $(this);
-        var inputName = input.attr('name'); // Get the field name
-        if (inputName) {
-            if (input.is('input[type="checkbox"]')) {
-                formData[inputName] = input.prop('checked'); // For checkbox fields
-            } else if (input.is('select') || input.is('input[type="text"]') || input.is('textarea')) {
-                formData[inputName] = input.val(); // For text inputs and selects
-            }
+        // Get name and email field values
+        var userName = $('#user-name').val().trim();
+        var userEmail = $('#user-email').val().trim();
+        var isValid = true;
+
+        // Validate the name field (check if it's not empty)
+        if (userName === '') {
+            $('#user-name').after('<span class="error-message">Please enter your name.</span>');
+            isValid = false;
         }
-    });
 
+        // Validate the email field (check if it's not empty and is in valid email format)
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (userEmail === '') {
+            $('#user-email').after('<span class="error-message">Please enter your email.</span>');
+            isValid = false;
+        } else if (!emailPattern.test(userEmail)) {
+            $('#user-email').after('<span class="error-message">Please enter a valid email address.</span>');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return; // Stop the form submission if there are validation errors
+        }
+
+        // Gather all form data
+        var formData = {
+            selected_skills: JSON.stringify(selectedSkills), // Pass the selected skills as a JSON string
+            selected_option: $('#selected-option-input').val(), // Option selected in the form
+            name: userName, // Name field value
+            email: userEmail, // Email field value
+            phone: iti.getNumber(),  // Get the full international phone number
+            terms_agreed: $('#user-terms-checkbox').prop('checked'), // Terms and Conditions checkbox
+            // Add other fields as needed
+        };
+
+        // You can also loop through form fields dynamically if the form has many fields:
+        $('#my-form').find('input, select, textarea').each(function () {
+            var input = $(this);
+            var inputName = input.attr('name'); // Get the field name
+            if (inputName) {
+                if (input.is('input[type="checkbox"]')) {
+                    formData[inputName] = input.prop('checked'); // For checkbox fields
+                } else if (input.is('select') || input.is('input[type="text"]') || input.is('textarea')) {
+                    formData[inputName] = input.val(); // For text inputs and selects
+                }
+            }
+        });
+
+        // AJAX request to submit the form data
         $.ajax({
             url: stepFormAjax.ajax_url, // URL of admin-ajax.php
             method: 'POST',
@@ -187,12 +239,11 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function () {
-                alert('There was a problem with the form submission.');
+                alert('An error occurred while submitting the form.');
             },
             complete: function () {
-                $('#submit-form').prop('disabled', false); // Re-enable the submit button after submission
-            }
+                $('#submit-form').prop('disabled', false); // Re-enable the submit button
+            },
         });
-        
     });
 });
